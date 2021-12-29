@@ -22,6 +22,24 @@ namespace AssemblyBrowser.ViewModel
             }
         }
 
+        private RelayCommand _loadAssemblyCommad;
+        public RelayCommand LoadAssemblyCommand
+        {
+            get
+            {
+                return _loadAssemblyCommad ??
+                    (_loadAssemblyCommad = new RelayCommand(obj =>
+                    {
+                        OpenFileDialog openFileDialog = new OpenFileDialog();
+                        openFileDialog.Filter = "Assembly |*.dll";
+                        if (openFileDialog.ShowDialog() == true)
+                        {
+                            Assembly = new Assembly(openFileDialog.FileName);
+                        }
+                    }));
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
